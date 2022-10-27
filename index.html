@@ -2,10 +2,10 @@
  * @Author: 黄宇/Hyuishine
  * @Date: 2022-09-30 20:12:24
  * @LastEditors: 黄宇/Hyuishine
- * @LastEditTime: 2022-09-30 23:15:42
+ * @LastEditTime: 2022-10-27 14:23:11
  * @Description: 
  * @Email: hyuishine@gmail.com
- * @Company: 3xData
+ * @Company: 
  * @youWant: 抄一下羊了个羊 3消这种游戏。
 -->
 <!DOCTYPE html>
@@ -87,7 +87,7 @@
 
 <body>
     <div id="app">
-        <!-- 顶部 工具栏 -->
+        <!-- 顶部 工具栏  d待写-->
         <div class="container_header"></div>
 
         <!-- 中间 主要内容  砖块生成区 -->
@@ -103,7 +103,7 @@
 
         <!-- 底部 消除栏 -->
         <div class="container_footer">
-            <div class="brick" v-for="brick,i in waitToClear" :key="i" :style="'background-color:'+ brick.color +';'">
+            <div class="brick" v-for="brick,i in waitForClear" :key="i" :style="'background-color:'+ brick.color +';'">
                 {{ brick.label }}</div>
         </div>
     </div>
@@ -117,7 +117,7 @@
                     brickWidth: 100, // 砖块宽度 最好整数，且能被容器宽度整除
                     brickHeight: 100, // 砖块高度  最好整数，且能被容器宽度整除
                     brickGap: 50, // 宽度/2 || 高度/2
-                    brickFloor: 10, // 总共有多少层
+                    brickFloor: 10, // 总共有多少层 // todo
                     type: [ // 总共有多少类型
                         // label:显示的数字，color:显示的颜色，icon：// 图标（没有做）
                         { label: 1, color: 'white', icon: '' },
@@ -138,7 +138,7 @@
                     // { zLevel: 1, label: 100, posX: 900, posY: 900, color: 'red', icon: '' }
                 ],
 
-                waitToClear: [ // 消除栏的准备三消的砖块
+                waitForClear: [ // 消除栏的准备三消的砖块
                 ]
             },
 
@@ -150,10 +150,10 @@
                 // 点击砖块 将其放到待消除区域
                 brickToRemove (brick, brickIndex) {
                     // 等待消除的砖块数量小于十个 才能放到消除栏
-                    if (this.waitToClear.length < 10) {
-                        this.waitToClear.push(brick)
+                    if (this.waitForClear.length < 10) {
+                        this.waitForClear.push(brick)
                         this.bricks.splice(brickIndex, 1)
-                    } else if (this.waitToClear.length === 10) {
+                    } else if (this.waitForClear.length === 10) {
                         alert('游戏结束')
                     }
                 },
@@ -190,7 +190,7 @@
             },
 
             watch: {
-                waitToClear: {
+                waitForClear: {
                     handler (n) {
                         // 3个才开始 判断是否要消除
                         if (n && n.length >= 3) {
